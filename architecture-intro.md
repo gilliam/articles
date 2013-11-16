@@ -17,6 +17,11 @@ Gilliam borrows code and ideas from open source projects such as
 
 ## 2. Assumptions and Goals
 
+### For Distributed Systems
+
+Where other platforms are targeting *web applications* Gilliam aims to
+make it easier to develop and manage services in a distributed system.
+
 ### Ease of development
 
 The primary design goal for Gilliam is to make it easier to develop
@@ -33,7 +38,9 @@ in a private data center.
 ### Continuous Deployment Pipeline
 
 Gilliam should be designed in such a way that it allows for continuous
-deployment pipelines with canary deploys.
+deployment pipelines with canary deploys.  This means that the
+platform must allow for heterogeneous deployments where there are
+multiple versions of a service running at the same time.
 
 ### Sharing Services
 
@@ -50,30 +57,65 @@ dependencies into an immutable *image*.
 The four basic constructs of Gilliam are *formation*, *process*,
 *auxiliary service* and *instance*.  The *formation* is a namespace
 for *instances*.  *Instances* are created out of *processes* and
-*auxiliary services*.
-
-An *instance* is assigned to a machine of some kind running a host
-agent called the *executor*.  *Instances* gets assigned by the
-*scheduler*.
+*auxiliary services*.  An *instance* is assigned to a machine running
+a host agent called the *executor*.  *Instances* gets assigned to
+*executors* by the *scheduler*.
 
 The whole system is bootstrapped by the *bootstrap* script.
 
 ## 4. Features
 
-### Gears
+### Twelve-Factor Apps
+
+Gilliam is built from the beginning to support the [twelve-factor
+methodology](http://12factor.net/).
+
+### Service Discovery
+
+Gilliam comes with a really simple [service
+registry](https://github.com/gilliam/service-registry) which allows
+services to announce their presence and to locate other services.
+
+Where other platforms and systems go for a service discovery system
+with high level of consistency Gilliam has opted for an evental
+consistent design. The assumption is that *liveness* information is
+eventual consistent by its nature and regardless clients need to
+handle failures and fail overs.
+
+The service registry expose a simple REST API over HTTP.  
+
+### Built for REST APIs
+
+The router takes incoming HTTP requests and send them of to a service
+running on the platform.  The routing table is configurable via the
+`gilliam` command-line tool and allow simple matching and re-write
+rules.  For example, the router can be set up to send all requests
+made to `myapp.com/user/{username}` to `web.user.service/{username}`.
 
 ### Ease of Integration (Proxies)
+
+To lower the bar to get going on the platform Gilliam comes with a
+builtin HTTP proxy that allows easy access to services by simply
+requesting something at `<service>.<formation>.service`.  The proxy
+supports the `CONNECT` method which allows for *WebSockets* and other
+protocols. 
+
+When your service is started, the `HTTP_PROXY` environment variable
+contains connection information to the proxy.
+
+Right now only HTTP is supported but there are plans for more generic
+TCP proxies to allow the use of libraries and tools that do not easily
+integrate with the platform.
 
 ### Declarative Approach to Internal Dependencies
 
 Most services need some kind of persistent storage, cache or other
-kind of auxiliary service.  ...
-
-
+kind of auxiliary service. 
 
 ### Turtles
 
-Core components of Gilliam, such as the *scheduler*, are services
-running on Gilliam itself.  This allows for building services that
-manages and control other services, for example auto scalers.
+Core components of Gilliam, such as the *scheduler* and the *router*,
+are services running on Gilliam itself.  This allows for building
+services that manages and control other services, for example auto
+scalers.
 
