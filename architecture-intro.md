@@ -12,7 +12,7 @@ specifying service internal dependencies.  It is built for public and
 private clouds.
 
 Gilliam borrows code and ideas from open source projects such as
-[Flynn](http://flynn.io) and Cloud Foundary. It also builds upon code
+[Flynn](http://flynn.io) and Cloud Foundry. It also builds upon code
 and ideas from [Heroku](http://heroku.com) and other platform as a
 services.
 
