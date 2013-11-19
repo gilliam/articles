@@ -54,8 +54,7 @@ components.
 ## 3. High Level Architecture
 
 Gilliam is a platform for managing services in a system based on a
-micro service architecture.  Code is built with its runtime
-dependencies into an immutable *image*.
+micro service architecture. 
 
 The four basic constructs of Gilliam are *formation*, *process*,
 *auxiliary service* and *instance*.  The *formation* is a namespace
@@ -109,6 +108,20 @@ contains connection information to the proxy.
 Right now only HTTP is supported but there are plans for more generic
 TCP proxies to allow the use of libraries and tools that do not easily
 integrate with the platform.
+
+### Scheduler
+
+Gilliam's scheduler is responsible for taking new instances and
+assigning them to a executor.  Once assigned, an instance is never
+re-assigned to another executor.  If the executor goes missing for
+some reason and all the instances are lost new instances need to be
+created and placed on another executor.
+
+Where instances are placed are controlled by a *requirements and rank*
+algorithm.  Each instance can have a set of *requirements* that need
+to be fulfilled by executor for it to be considered.  After filtering
+the remaining executors are ranked by a *rank* expression and the
+first one is selected.
 
 ### Declarative Approach to Internal Dependencies
 
