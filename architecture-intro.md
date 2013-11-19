@@ -110,7 +110,22 @@ integrate with the platform.
 ### Declarative Approach to Internal Dependencies
 
 Most services need some kind of persistent storage, cache or other
-kind of auxiliary service. 
+kind of auxiliary service. In the `gilliam.yml` file it is possible to
+specify a set of auxiliary services of different types that you want
+to run along side your business code:
+
+    auxiliary:
+      _cache:
+        type: redis
+      _config:
+        type: etcd
+
+These services (`_cache` and `_config`) are just like the processes
+you define in that they can be scaled up and down, and addressed using
+`<service>.<formation>.service`.
+
+The client (`gilliam-cli`) comes with a few builtin auxiliary service
+types, but can be easiliy be extended with more.
 
 ### Turtles
 
@@ -118,4 +133,3 @@ Core components of Gilliam, such as the *scheduler* and the *router*,
 are services running on Gilliam itself.  This allows for building
 services that manages and control other services, for example auto
 scalers.
-
