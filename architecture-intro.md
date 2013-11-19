@@ -16,6 +16,9 @@ Gilliam borrows code and ideas from open source projects such as
 and ideas from [Heroku](http://heroku.com) and other platform as a
 services.
 
+If you want to take Gilliam for a spin, check out the [quick
+into](https://github.com/gilliam/articles/blob/master/quick-intro.md).
+
 ## 2. Assumptions and Goals
 
 ### For Distributed Systems
