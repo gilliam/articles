@@ -72,19 +72,41 @@ The whole system is bootstrapped by the *bootstrap* script.
 Gilliam is built from the beginning to support the [twelve-factor
 methodology](http://12factor.net/).
 
-### Service Discovery
+### Declarative Approach to App Configuration
 
-Gilliam comes with a really simple [service
-registry](https://github.com/gilliam/service-registry) which allows
-services to announce their presence and to locate other services.
+Where Heroku has its *Procfile* and dotCloud its *dotcloud.yml*
+Gilliam has a `gilliam.yml` file that declared most aspects about the
+application.  Processes are defined under the `processes` hash:
 
-Where other platforms and systems go for a service discovery system
-with high level of consistency Gilliam has opted for an evental
-consistent design. The assumption is that *liveness* information is
-eventual consistent by its nature and regardless clients need to
-handle failures and fail overs.
+    processes:
+      www:
+        script: python web.py
+        ports: [80]
 
-The service registry expose a simple REST API over HTTP.  
+`script` specifies what command should be run when the process is
+started.  The `ports` key define which TCP ports are exposed by the
+service process, if any.
+
+An immutable image for the processes are built using a Heroku
+buildpack and all processes share the same image.
+
+Most services need some kind of persistent storage, cache or other
+kind of auxiliary service. In the `gilliam.yml` file it is possible to
+specify a set of auxiliary services of different types that you want
+to run along side your business code:
+
+    auxiliary:
+      _cache:
+        type: redis
+      _config:
+        type: etcd
+
+These services (`_cache` and `_config`) are just like the processes
+you define in that they can be scaled up and down, and addressed using
+`<service>.<formation>.service`.
+
+The client (`gilliam-cli`) comes with a few builtin auxiliary service
+types, but can be easiliy be extended with more.
 
 ### Built for REST APIs
 
@@ -123,25 +145,19 @@ to be fulfilled by executor for it to be considered.  After filtering
 the remaining executors are ranked by a *rank* expression and the
 first one is selected.
 
-### Declarative Approach to Internal Dependencies
+### Service Discovery
 
-Most services need some kind of persistent storage, cache or other
-kind of auxiliary service. In the `gilliam.yml` file it is possible to
-specify a set of auxiliary services of different types that you want
-to run along side your business code:
+Gilliam comes with a really simple [service
+registry](https://github.com/gilliam/service-registry) which allows
+services to announce their presence and to locate other services.
 
-    auxiliary:
-      _cache:
-        type: redis
-      _config:
-        type: etcd
+Where other platforms and systems go for a service discovery system
+with high level of consistency Gilliam has opted for an evental
+consistent design. The assumption is that *liveness* information is
+eventual consistent by its nature and regardless clients need to
+handle failures and fail overs.
 
-These services (`_cache` and `_config`) are just like the processes
-you define in that they can be scaled up and down, and addressed using
-`<service>.<formation>.service`.
-
-The client (`gilliam-cli`) comes with a few builtin auxiliary service
-types, but can be easiliy be extended with more.
+The service registry expose a simple REST API over HTTP.  
 
 ### Turtles
 
