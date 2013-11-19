@@ -31,8 +31,8 @@ commands:
 
 ### Step 4: Build and Deploy
 
-In this step we will build the example application (without pushing it
-to the registry) and scale it:
+In this step we will build the example application (without pushing
+the resulting image to the registry) and scale it:
 
     $ gilliam deploy --no-push
     ...
