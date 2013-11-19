@@ -33,7 +33,7 @@ possible for maintaining a system with 50+ services.
 The primary design goal for Gilliam is to make it easier to develop
 and deploy services for a distributed system.  It should allow the
 developer to focus on business logic rather than packaging, writing
-Pupper or Chef manifests, handling configuration and code for managing
+Puppet or Chef manifests, handling configuration and code for managing
 log files.
 
 ### For both Public and Private Clouds
@@ -108,8 +108,8 @@ These services (`_cache` and `_config`) are just like the processes
 you define in that they can be scaled up and down, and addressed using
 `<service>.<formation>.service`.
 
-The client (`gilliam-cli`) comes with a few builtin auxiliary service
-types, but can be easiliy be extended with more.
+The client (`gilliam-cli`) comes with a few built in auxiliary service
+types, but can be easily be extended with more.
 
 ### Built for REST APIs
 
@@ -122,7 +122,7 @@ made to `myapp.com/user/{username}` to `web.user.service/{username}`.
 ### Ease of Integration (Proxies)
 
 To lower the bar to get going on the platform Gilliam comes with a
-builtin HTTP proxy that allows easy access to services by simply
+built in HTTP proxy that allows easy access to services by simply
 requesting something at `<service>.<formation>.service`.  The proxy
 supports the `CONNECT` method which allows for *WebSockets* and other
 protocols. 
@@ -155,7 +155,7 @@ registry](https://github.com/gilliam/service-registry) which allows
 services to announce their presence and to locate other services.
 
 Where other platforms and systems go for a service discovery system
-with high level of consistency Gilliam has opted for an evental
+with high level of consistency Gilliam has opted for an eventual
 consistent design. The assumption is that *liveness* information is
 eventual consistent by its nature and regardless clients need to
 handle failures and fail overs.
@@ -167,4 +167,4 @@ The service registry expose a simple REST API over HTTP.
 Core components of Gilliam, such as the *scheduler* and the *router*,
 are services running on Gilliam itself.  This allows for building
 services that manages and control other services, for example auto
-scalers.
+scaling.
