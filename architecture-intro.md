@@ -6,14 +6,15 @@ The Gilliam project started after having worked with distributed
 systems composed of many small services and seeing the problems and
 overhead this creates when it comes to packaging, deployment and
 scaling.  It is a platform for systems based on a micro service
-architecture.  It is polyglot in that it services written in any
-language can be deployed on the platform.  It takes a declarative
-approach to specifying service internal dependencies.  It is built for
-public and private clouds.
+architecture.  It is polyglot in that services written in any language
+can be deployed on the platform.  It takes a declarative approach to
+specifying service internal dependencies.  It is built for public and
+private clouds.
 
 Gilliam borrows code and ideas from open source projects such as
-[Flynn](http://flynn.io).  It also builts upon code and ideas from
-[Heroku](http://heroku.com) and other platform as a services.
+[Flynn](http://flynn.io) and Cloud Foundary. It also builds upon code
+and ideas from [Heroku](http://heroku.com) and other platform as a
+services.
 
 ## 2. Assumptions and Goals
 
@@ -21,6 +22,8 @@ Gilliam borrows code and ideas from open source projects such as
 
 Where other platforms are targeting *web applications* Gilliam aims to
 make it easier to develop and manage services in a distributed system.
+Gilliam should be designed so that it removes as much friction as
+possible for maintaining a system with 50+ services.
 
 ### Ease of development
 
