@@ -53,6 +53,6 @@ The script is optional.
 
 ## Distribution
 
-Apparatuses can be distributed as gzip'ed tarballs over http an htttp,
-or as git repositories.  For the tarball, all files should be put in
-the "root" of the ball.
+Apparatuses can be distributed as gzip'ed tarballs over http and
+https, or as git repositories.  For the tarball, all files should be
+put in the "root" of the ball.
