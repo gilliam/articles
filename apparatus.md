@@ -4,14 +4,13 @@
   activity or purpose.
 
 In the context of Gilliam an apparatus is something that adds extra
-functionality to your process.  It can be a statsd daemon or some other
-metrics gathering tool.  It can be pretty much anything that will make
-your life easier as a developer.
+functionality to your process.  For example, it can be a statsd
+daemon. It can be a HTTP proxy that collects statistics and enforces
+concurrency limits. In general, it can be pretty much anything that
+will make your life easier as a developer.
 
 An apparatus runs alongside your process, in the same image, sharing
-memory and CPU resources.  It is important to point out that
-apparatuses are isolated from other instances just as your process
-instance.
+memory and CPU resources with your process.
 
 # Using An Apparatus
 
@@ -25,8 +24,10 @@ To include an apparatus in your project, just add it to your
        - https://github.com/gilliam/apparatus-statsd.git
 
 That's it.  Next time you'll build an image (`gilliam deploy`) the
-apparatus will be included.  Configuration for the apparatus, if
-needed, is sourced from the environment just as for your processes.
+apparatus will be included and you'll have a statsd daemon running in
+your instance accepting metrics on UDP port 127.0.0.1:2185.
+Configuration for the apparatus, if needed, is sourced from the
+environment just as for your processes.
 
 # Providing An Apparatus
 
